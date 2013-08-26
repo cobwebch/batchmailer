@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-03-43T11:50:43Z" product-name="batchmailer">
+		<header/>
+		<body>
+
+			<trans-unit id="storagePid">
+				<source>Storage page: Page where to store mails which are not sent from a FE page (e.g. BE, Scheduler task, etc.)</source>
+			</trans-unit>
+			<trans-unit id="storagePidOverride">
+				<source>Override storage page: Check this box to use the above storage page for all mails. Otherwise, mails sent from a given page in the FE are stored in that page.</source>
+			</trans-unit>
+			<trans-unit id="originalTransport">
+				<source>Original transport: Define transport to use when sending the mails (mail, smtp, sendmail, mbox). Will override $TYPO3_CONF_VARS['MAIL']['transport'].</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

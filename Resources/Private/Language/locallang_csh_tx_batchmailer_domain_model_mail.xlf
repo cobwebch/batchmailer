@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-03-43T11:50:43Z" product-name="batchmailer">
+		<header/>
+		<body>
+
+			<trans-unit id="recipients.description">
+				<source>Recipients of the mail</source>
+			</trans-unit>
+			<trans-unit id="copies.description">
+				<source>Persons cc'ed in the mail</source>
+			</trans-unit>
+			<trans-unit id="blind_copies.description">
+				<source>Persons bcc'ed in the mail</source>
+			</trans-unit>
+			<trans-unit id="sender.description">
+				<source>Person sending the mail (from field)</source>
+			</trans-unit>
+			<trans-unit id="subject.description">
+				<source>Subject of the mail</source>
+			</trans-unit>
+			<trans-unit id="body.description">
+				<source>Content of the mail</source>
+			</trans-unit>
+			<trans-unit id="mail.description">
+				<source>The mail object itself, serialized</source>
+			</trans-unit>
+			<trans-unit id="mail_object.description">
+				<source>The unserialized mail object</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

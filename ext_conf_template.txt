@@ -1,0 +1,8 @@
+# cat=basic//a; type=string; label=LLL:EXT:batchmailer/Resources/Private/Language/locallang_config.xlf:originalTransport
+originalTransport =
+
+# cat=basic//b; type=integer; label=LLL:EXT:batchmailer/Resources/Private/Language/locallang_config.xlf:storagePid
+storagePid =
+
+# cat=basic//c; type=boolean; label=LLL:EXT:batchmailer/Resources/Private/Language/locallang_config.xlf:storagePidOverride
+storagePidOverride =

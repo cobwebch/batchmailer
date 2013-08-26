@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-03-43T11:50:43Z" product-name="batchmailer">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_batchmailer_domain_model_mail">
+				<source>Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.tab_mail">
+				<source>Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.tab_sent">
+				<source>Sending information</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.crdate">
+				<source>Creation Date</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.recipients">
+				<source>Recipients</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.copies">
+				<source>Copies</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.blind_copies">
+				<source>Blind Copies</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sender">
+				<source>Sender</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.subject">
+				<source>Subject</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.body">
+				<source>Body</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.attachments">
+				<source>Attachments</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.mail">
+				<source>Mail Object</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent">
+				<source>Sent?</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_status.not_sent">
+				<source>Not sent</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_status.warning">
+				<source>Warning</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_status.error">
+				<source>Error</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_status.ok">
+				<source>OK</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_error_message">
+				<source>Error message</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_date">
+				<source>Sent on</source>
+			</trans-unit>
+			<trans-unit id="tx_batchmailer_domain_model_mail.sent_tries">
+				<source>Number of tries</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
