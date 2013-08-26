@@ -50,13 +50,13 @@ since TYPO3 4.7.
 The command controller uses the transport defined in the "originalTransport" configuration discussed
 above to send the mails.
 
-You will probably want to run this job at a high frequency in order not to delay the files too much.
+You will probably want to run this job at a high frequency in order not to delay the mails too much.
 
 
 More stuff to know
 ^^^^^^^^^^^^^^^^^^
 
 In order to be able to send mails in a delayed fashion, the mail objects are stored in database table
-"tx_batchmailer_domain_model_mail", along with some information for display in the BE. The attachments
-are removed from the object and stored in folder :file:`uploads/tx_batchmailer/`. Mind that this folder could
+``tx_batchmailer_domain_model_mail``, along with some information for display in the BE. The attachments
+are removed from the object and stored in folder ``uploads/tx_batchmailer/``. Mind that this folder could
 grow quite a bit over time. There's currently no cleanup task, but it's planned to add one in the future, as needed.
