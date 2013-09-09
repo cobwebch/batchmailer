@@ -47,7 +47,7 @@ with a command like::
 	/path/to/php /path/to/typo3/cli_dispatch.phpsh extbase mailer:send
 
 
-or register it with the Scheduler using the Extbase Extbase CommandController Task Scheduler task available
+or register it with the Scheduler using the Extbase Extbase CommandController Task available
 since TYPO3 4.7.
 
 The command controller uses the transport defined in the "originalTransport" configuration discussed
@@ -63,3 +63,21 @@ In order to be able to send mails in a delayed fashion, the mail objects are sto
 ``tx_batchmailer_domain_model_mail``, along with some information for display in the BE. The attachments
 are removed from the object and stored in folder ``uploads/tx_batchmailer/``. Mind that this folder could
 grow quite a bit over time. There's currently no cleanup task, but it's planned to add one in the future, as needed.
+
+There's no BE module to review the mail records, but they can be viewed in normal Web > List view.
+All fields are read-only. Actual management of emails could be added in the future, but is not planned
+for now.
+
+A mail can be in any of four statuses:
+
+#. **not sent**: the mail has not yet been sent
+#. **ok**: the mail was sent successfully
+#. **warning**: the mail was sent to at least one person, but some problems happened
+#. **error**: the mail was not sent (for a variety of reasons) or failed for all recipients.
+
+For each mail a "sent" status is also kept. Mails that are not yet sent, will be sent the next time
+the command controller is run. If a mail goes through the sending process but is actually sent to no one,
+its status will be "error", but it will still be considered as sent and thus not retried. This is an edge
+case which should usually not happen. In general sending a mail will fail in a more drastic way
+(e.g. the SMTP server is not available) in which cases the mails are not considered sent and will be
+retried next time.
