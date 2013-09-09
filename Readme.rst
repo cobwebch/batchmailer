@@ -24,27 +24,30 @@ Configuration
 
 This extension comes with the following options (to configure in the Extension Manager):
 
-- **originalTransport**: since activating this extension implies changing :code:`$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']`
+originalTransport
+  Since activating this extension implies changing :code:`$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']`
   whatever original transport might have been there ("smtp", etc.) is lost. However this information is needed for when the mails
   are actually sent. This is the place to set it. The value here should be what you would have put in
   :code:`$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']` if you weren't using this extension.
 
-- **storagePid**: id of the page where the mails should be stored, when sent from another context than FE (e.g. BE, a Scheduler task, etc.).
+storagePid
+  Id of the page where the mails should be stored, when sent from another context than FE (e.g. BE, a Scheduler task, etc.).
   For the FE context, mails are stored by default in the page where they were sent from.
 
-- **storagePidOverride**: force the storage pid to be used even in the FE context.
+storagePidOverride
+  Force the storage pid to be used even in the FE context.
 
 
 Sending the mails
 ^^^^^^^^^^^^^^^^^
 
-The mails are actually sent by a Extbase command controller. It is thus possible to either define a cron job
+The mails are actually sent by an Extbase command controller. It is thus possible to either define a cron job
 with a command like::
 
 	/path/to/php /path/to/typo3/cli_dispatch.phpsh extbase mailer:send
 
 
-or use it as in the Scheduler using the Extbase Extbase CommandController Task Scheduler task available
+or register it with the Scheduler using the Extbase Extbase CommandController Task Scheduler task available
 since TYPO3 4.7.
 
 The command controller uses the transport defined in the "originalTransport" configuration discussed
