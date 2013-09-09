@@ -25,17 +25,18 @@ $TCA['tx_batchmailer_domain_model_mail'] = array(
 		'searchFields' => 'recipients,copies,blind_copies,sender,subject,body',
 		'typeicon_column' => 'sent_status',
 		'typeicon_classes' => array(
+			'default' => 'extensions-batchmailer-default',
 			'0' => 'extensions-batchmailer-status-not-sent',
 			'3' => 'extensions-batchmailer-status-error',
 			'4' => 'extensions-batchmailer-status-warning',
 			'6' => 'extensions-batchmailer-status-ok'
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Mail.php',
-		'iconfile' => $extensionRelativePath . 'Resources/Public/Icons/MailDefault.png'
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Mail.php'
 	),
 );
 
 $icons = array(
+	'default' => $extensionRelativePath . 'Resources/Public/Icons/MailDefault.png',
 	'status-not-sent' => $extensionRelativePath . 'Resources/Public/Icons/MailNotSent.png',
 	'status-error' => $extensionRelativePath . 'Resources/Public/Icons/MailError.png',
 	'status-warning' => $extensionRelativePath . 'Resources/Public/Icons/MailWarning.png',
