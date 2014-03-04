@@ -42,8 +42,10 @@ class Tx_Batchmailer_Utility_Format {
 	 */
 	public static function formatListOfNames($array) {
 		$list = array();
-		foreach ($array as $key => $value) {
-			$list[] = $value . ' <' . $key . '>';
+		if (is_array($array)) {
+			foreach ($array as $key => $value) {
+				$list[] = $value . ' <' . $key . '>';
+			}
 		}
 		return implode("\n", $list);
 	}
