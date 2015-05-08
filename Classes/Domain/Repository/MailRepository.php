@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -25,25 +26,21 @@
  ***************************************************************/
 
 /**
- *
+ * Mail objects storage repository.
  *
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: MailRepository.php 72690 2013-03-12 16:55:19Z francois $
  */
-class Tx_Batchmailer_Domain_Repository_MailRepository extends Tx_Extbase_Persistence_Repository {
+class MailRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
 	/**
 	 * Performs initialization for the repository object
 	 */
 	public function initializeObject() {
-		/** @var $querySettings Tx_Extbase_Persistence_Typo3QuerySettings */
-		$querySettings = $this->objectManager->create('Tx_Extbase_Persistence_Typo3QuerySettings');
+		/** @var $querySettings \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings */
+		$querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
 		// Tell the repository to ignore the storage pid condition (will get all records, wherever they are)
 		$querySettings->setRespectStoragePage(FALSE);
 		$this->setDefaultQuerySettings($querySettings);
 	}
-
 }
-?>

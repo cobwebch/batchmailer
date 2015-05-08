@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Utility;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -30,10 +31,8 @@
  * @author Francois Suter <typo3@cobweb.ch>
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: Format.php 72684 2013-03-12 13:47:59Z francois $
  */
-class Tx_Batchmailer_Utility_Format {
+class Format {
 	/**
 	 * Formats a list of SwiftMail people (array with e-mail addresses as keys and names as values)
 	 *
@@ -50,4 +49,3 @@ class Tx_Batchmailer_Utility_Format {
 		return implode("\n", $list);
 	}
 }
-?>

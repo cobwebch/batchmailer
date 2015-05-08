@@ -8,7 +8,9 @@ and stores them in a database tables. The mail are sent later via a cron job or 
 Compatibility
 ^^^^^^^^^^^^^
 
-This extension requires TYPO3 4.7 or more to function properly.
+This extension requires TYPO3 CMS 4.7 or more to function properly.
+
+Version 1.1.0 requires TYPO3 CMS 6.2 or more.
 
 
 Activation
@@ -16,7 +18,7 @@ Activation
 
 To activate this transport simply set the following configuration::
 
-	$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'Tx_Batchmailer_Service_Transport';
+	$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'Cobweb\Batchmailer\Service\Transport';
 
 
 Configuration
@@ -48,7 +50,7 @@ with a command like::
 
 
 or register it with the Scheduler using the Extbase Extbase CommandController Task available
-since TYPO3 4.7.
+since TYPO3 CMS 4.7.
 
 The command controller uses the transport defined in the "originalTransport" configuration discussed
 above to send the mails.

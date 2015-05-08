@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -29,10 +30,8 @@
  *
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: Mail.php 74946 2013-04-29 11:43:56Z francois $
  */
-class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractEntity {
+class Mail extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Recipients of the mail
@@ -119,7 +118,7 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Date at which the mail was sent
 	 *
-	 * @var DateTime
+	 * @var \DateTime
 	 * @validate DateTime
 	 */
 	protected $sentDate;
@@ -144,7 +143,7 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	 * Sets the recipients
 	 *
 	 * @param string $recipients
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 * @return void
 	 */
 	public function setRecipients($recipients) {
@@ -205,7 +204,7 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	 * Sets the sender
 	 *
 	 * @param string $sender
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 * @return void
 	 */
 	public function setSender($sender) {
@@ -332,7 +331,7 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Returns the sent date
 	 *
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function getSentDate() {
 		return $this->sentDate;
@@ -341,10 +340,10 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the sent date
 	 *
-	 * @param DateTime $sentDate
+	 * @param \DateTime $sentDate
 	 * @return void
 	 */
-	public function setSentDate(DateTime $sentDate) {
+	public function setSentDate(\DateTime $sentDate) {
 		$this->sentDate = $sentDate;
 	}
 
@@ -368,7 +367,7 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 
 	/**
 	 * @param int $sentTries
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function setSentTries($sentTries) {
 		$sentTries = intval($sentTries);
@@ -386,4 +385,3 @@ class Tx_Batchmailer_Domain_Model_Mail extends Tx_Extbase_DomainObject_AbstractE
 	}
 
 }
-?>

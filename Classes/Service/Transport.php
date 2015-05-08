@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Service;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -24,30 +25,32 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Cobweb\Batchmailer\Domain\Model\Mail;
+use Cobweb\Batchmailer\Utility\Format;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Mail Transport which stores all mails in a database table, to be sent later by a Scheduler task.
  *
  * @author Francois Suter <typo3@cobweb.ch>
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: Transport.php 74514 2013-04-15 14:02:21Z francois $
  */
-class Tx_Batchmailer_Service_Transport implements Swift_Transport {
+class Transport implements \Swift_Transport {
 	/**
-	 * @var Tx_Batchmailer_Domain_Repository_MailRepository
+	 * @var \Cobweb\Batchmailer\Domain\Repository\MailRepository
 	 */
 	protected $mailRepository;
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManager
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 */
 	protected $objectManager;
 
 	/**
 	 * Instance of the persistence manager
 	 *
-	 * @var Tx_Extbase_Persistence_Manager
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
 	 */
 	protected $persistenceManager;
 
@@ -59,9 +62,9 @@ class Tx_Batchmailer_Service_Transport implements Swift_Transport {
 	public function __construct($settings) {
 		// Initialize objects manually, as the full Extbase context is not loaded and we cannot rely
 		// on dependency injection at this point
-		$this->mailRepository = t3lib_div::makeInstance('Tx_Batchmailer_Domain_Repository_MailRepository');
-		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		$this->persistenceManager = t3lib_div::makeInstance('Tx_Extbase_Persistence_Manager');
+		$this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$this->mailRepository = $this->objectManager->get('Cobweb\\Batchmailer\\Domain\\Repository\\MailRepository');
+		$this->persistenceManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
 		// Read the extension's configuration
 		$this->configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['batchmailer']);
 	}
@@ -101,21 +104,21 @@ class Tx_Batchmailer_Service_Transport implements Swift_Transport {
 	 * With this transport, messages are not sent right away, but stored in the database
 	 * to be sent at a later stage.
 	 *
-	 * @param Swift_Mime_Message $message
+	 * @param \Swift_Mime_Message $message
 	 * @param string[] &$failedRecipients to collect failures by-reference
 	 * @return int
 	 */
-	public function send(Swift_Mime_Message $message, &$failedRecipients = null) {
+	public function send(\Swift_Mime_Message $message, &$failedRecipients = null) {
 		// Create the Mail object and set its values
-		/** @var $newMail Tx_Batchmailer_Domain_Model_Mail */
-		$newMail = $this->objectManager->create('Tx_Batchmailer_Domain_Model_Mail');
+		/** @var $newMail Mail */
+		$newMail = $this->objectManager->get('Cobweb\\Batchmailer\\Domain\\Model\\Mail');
 		$newMail->setPid($this->getStoragePage());
 		$newMail->setSubject($message->getSubject());
 		$newMail->setBody($message->getBody());
-		$newMail->setRecipients(Tx_Batchmailer_Utility_Format::formatListOfNames($message->getTo()));
-		$newMail->setSender(Tx_Batchmailer_Utility_Format::formatListOfNames($message->getFrom()));
-		$newMail->setCopies(Tx_Batchmailer_Utility_Format::formatListOfNames($message->getCc()));
-		$newMail->setBlindCopies(Tx_Batchmailer_Utility_Format::formatListOfNames($message->getBcc()));
+		$newMail->setRecipients(Format::formatListOfNames($message->getTo()));
+		$newMail->setSender(Format::formatListOfNames($message->getFrom()));
+		$newMail->setCopies(Format::formatListOfNames($message->getCc()));
+		$newMail->setBlindCopies(Format::formatListOfNames($message->getBcc()));
 		// Take care of attachments
 		$this->saveAttachments($message, $newMail);
 		// Add the object itself
@@ -130,9 +133,9 @@ class Tx_Batchmailer_Service_Transport implements Swift_Transport {
 	 *
 	 * Not used.
 	 *
-	 * @param Swift_Events_EventListener $plugin
+	 * @param \Swift_Events_EventListener $plugin
 	 */
-	public function registerPlugin(Swift_Events_EventListener $plugin) {
+	public function registerPlugin(\Swift_Events_EventListener $plugin) {
 		// TODO: Implement registerPlugin() method.
 	}
 
@@ -158,17 +161,17 @@ class Tx_Batchmailer_Service_Transport implements Swift_Transport {
 	 * which will not exist anymore when the Scheduler task will attempt to send the original
 	 * messages. Thus we store the attachments here and restore them upon sending.
 	 *
-	 * @param t3lib_mail_Message $message The current message
-	 * @param Tx_Batchmailer_Domain_Model_Mail $mail The mail object for storage
+	 * @param \TYPO3\CMS\Core\Mail\MailMessage $message The current message
+	 * @param Mail $mail The mail object for storage
 	 * @return void
 	 */
-	protected function saveAttachments(t3lib_mail_Message $message, Tx_Batchmailer_Domain_Model_Mail $mail) {
+	protected function saveAttachments(\TYPO3\CMS\Core\Mail\MailMessage $message, Mail $mail) {
 		$attachments = array();
 		// Loop on all children (if any)
 		$children = $message->getChildren();
 		foreach ($children as $aChild) {
 			// If child is an attachment, read its content and store it in a specific location
-			if ($aChild instanceof Swift_Mime_Attachment) {
+			if ($aChild instanceof \Swift_Mime_Attachment) {
 				$temporaryFilename = PATH_site . 'uploads/tx_batchmailer/' . uniqid() . '-' . $aChild->getFilename();
 				$fp = fopen($temporaryFilename, 'w');
 				if ($fp) {
@@ -189,4 +192,3 @@ class Tx_Batchmailer_Service_Transport implements Swift_Transport {
 		}
 	}
 }
-?>

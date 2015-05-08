@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Command;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -30,12 +31,10 @@
  * @author Francois Suter <typo3@cobweb.ch>
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: MailerCommandController.php 74982 2013-04-29 15:04:28Z francois $
  */
-class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Controller_CommandController {
+class MailerCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
 	/**
-	 * @var Tx_Batchmailer_Domain_Repository_MailRepository
+	 * @var \Cobweb\Batchmailer\Domain\Repository\MailRepository
 	 * @inject
 	 */
 	protected $mailRepository;
@@ -43,7 +42,7 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 	/**
 	 * Instance of the persistence manager
 	 *
-	 * @var Tx_Extbase_Persistence_Manager
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
 	 * @inject
 	 */
 	protected $persistenceManager;
@@ -66,19 +65,19 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 		// Override the batch transport
 		$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = $this->configuration['originalTransport'];
 
-		/** @var $mailsToSend Tx_Extbase_Persistence_QueryResultInterface */
+		/** @var $mailsToSend \TYPO3\CMS\Extbase\Persistence\QueryResultInterface */
 		$mailsToSend = $this->mailRepository->findBySent(FALSE);
 
 		// Numbers for reporting
 		$mailsHandled = 0;
 		$mailsSentSuccessfully = 0;
 
-		/** @var $aMail Tx_Batchmailer_Domain_Model_Mail */
+		/** @var $aMail \Cobweb\Batchmailer\Domain\Model\Mail */
 		foreach ($mailsToSend as $aMail) {
 			$mailsHandled++;
 			try {
 				// It seems that the mail object is not automatically unserialized, do it "manually" here
-				/** @var $mailObject Tx_Batchmailer_Utility_Message */
+				/** @var $mailObject \TYPO3\CMS\Core\Mail\MailMessage */
 				$mailObject = unserialize($aMail->getMail());
 				// Restore the attachments
 				$attachmentsList = $aMail->getAttachments();
@@ -86,7 +85,7 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 					$attachments = explode(',', $attachmentsList);
 					foreach ($attachments as $aFile) {
 						$mailObject->attach(
-							Swift_Attachment::fromPath($aFile)->setFilename(basename($aFile))
+							\Swift_Attachment::fromPath($aFile)->setFilename(basename($aFile))
 						);
 					}
 				}
@@ -94,7 +93,7 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 				$failedRecipients = $mailObject->getFailedRecipients();
 				// Mark the mail as sent
 				$aMail->setSent(TRUE);
-				$aMail->setSentDate(new DateTime());
+				$aMail->setSentDate(new \DateTime());
 				// If it was sent to no one, set status to error and add list of failed recipients
 				if ($result == 0) {
 					$aMail->setSentStatus(3);
@@ -116,9 +115,9 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 					}
 				}
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				// If an exception happened, the mail is considered to be not sent, and the exception is logged
-				$aMail->setSentDate(new DateTime());
+				$aMail->setSentDate(new \DateTime());
 				$aMail->setSentStatus(3);
 				$aMail->setSentErrorMessage($e->getMessage() . ' (' . $e->getCode() . ')');
 			}
@@ -136,4 +135,3 @@ class Tx_Batchmailer_Command_MailerCommandController extends Tx_Extbase_MVC_Cont
 		}
 	}
 }
-?>

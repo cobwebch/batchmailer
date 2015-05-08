@@ -1,9 +1,10 @@
 <?php
+namespace Cobweb\Batchmailer\Controller;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
  *
  *  All rights reserved
  *
@@ -25,29 +26,27 @@
  ***************************************************************/
 
 /**
- *
+ * Controller for a possible BE module. Not used yet.
  *
  * @package batchmailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * $Id: MailController.php 72684 2013-03-12 13:47:59Z francois $
  */
-class Tx_Batchmailer_Controller_MailController extends Tx_Extbase_MVC_Controller_ActionController {
+class MailController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * mailRepository
 	 *
-	 * @var Tx_Batchmailer_Domain_Repository_MailRepository
+	 * @var \Cobweb\Batchmailer\Domain\Repository\MailRepository
 	 */
 	protected $mailRepository;
 
 	/**
 	 * injectMailRepository
 	 *
-	 * @param Tx_Batchmailer_Domain_Repository_MailRepository $mailRepository
+	 * @param \Cobweb\Batchmailer\Domain\Repository\MailRepository $mailRepository
 	 * @return void
 	 */
-	public function injectMailRepository(Tx_Batchmailer_Domain_Repository_MailRepository $mailRepository) {
+	public function injectMailRepository(\Cobweb\Batchmailer\Domain\Repository\MailRepository $mailRepository) {
 		$this->mailRepository = $mailRepository;
 	}
 
@@ -64,20 +63,20 @@ class Tx_Batchmailer_Controller_MailController extends Tx_Extbase_MVC_Controller
 	/**
 	 * action show
 	 *
-	 * @param Tx_Batchmailer_Domain_Model_Mail $mail
+	 * @param \Cobweb\Batchmailer\Domain\Model\Mail $mail
 	 * @return void
 	 */
-	public function showAction(Tx_Batchmailer_Domain_Model_Mail $mail) {
+	public function showAction(\Cobweb\Batchmailer\Domain\Model\Mail $mail) {
 		$this->view->assign('mail', $mail);
 	}
 
 	/**
 	 * action delete
 	 *
-	 * @param Tx_Batchmailer_Domain_Model_Mail $mail
+	 * @param \Cobweb\Batchmailer\Domain\Model\Mail $mail
 	 * @return void
 	 */
-	public function deleteAction(Tx_Batchmailer_Domain_Model_Mail $mail) {
+	public function deleteAction(\Cobweb\Batchmailer\Domain\Model\Mail $mail) {
 		$this->mailRepository->remove($mail);
 		$this->flashMessageContainer->add('Your Mail was removed.');
 		$this->redirect('list');
@@ -93,4 +92,3 @@ class Tx_Batchmailer_Controller_MailController extends Tx_Extbase_MVC_Controller
 	}
 
 }
-?>
