@@ -3,8 +3,29 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_batchmailer_domain_model_mail'] = array(
-	'ctrl' => $TCA['tx_batchmailer_domain_model_mail']['ctrl'],
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:batchmailer/Resources/Private/Language/locallang_db.xlf:tx_batchmailer_domain_model_mail',
+		'label' => 'subject',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'default_sortby' => 'ORDER BY crdate DESC',
+		'dividers2tabs' => TRUE,
+
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden'
+		),
+		'searchFields' => 'recipients,copies,blind_copies,sender,subject,body',
+		'typeicon_column' => 'sent_status',
+		'typeicon_classes' => array(
+			'default' => 'extensions-batchmailer-default',
+			'0' => 'extensions-batchmailer-status-not-sent',
+			'3' => 'extensions-batchmailer-status-error',
+			'4' => 'extensions-batchmailer-status-warning',
+			'6' => 'extensions-batchmailer-status-ok'
+		),
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'hidden, recipients, copies, blind_copies, sender, subject, body',
 	),
@@ -172,5 +193,3 @@ $TCA['tx_batchmailer_domain_model_mail'] = array(
 		),
 	),
 );
-
-?>
