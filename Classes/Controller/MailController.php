@@ -1,94 +1,92 @@
 <?php
 namespace Cobweb\Batchmailer\Controller;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013-2014 François Suter <typo3@cobweb.ch>, Cobweb Development Sarl
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use Cobweb\Batchmailer\Domain\Model\Mail;
+use Cobweb\Batchmailer\Domain\Repository\MailRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Controller for a possible BE module. Not used yet.
  *
  * @package batchmailer
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class MailController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class MailController extends ActionController
+{
 
-	/**
-	 * mailRepository
-	 *
-	 * @var \Cobweb\Batchmailer\Domain\Repository\MailRepository
-	 */
-	protected $mailRepository;
+    /**
+     * mailRepository
+     *
+     * @var MailRepository
+     */
+    protected $mailRepository;
 
-	/**
-	 * injectMailRepository
-	 *
-	 * @param \Cobweb\Batchmailer\Domain\Repository\MailRepository $mailRepository
-	 * @return void
-	 */
-	public function injectMailRepository(\Cobweb\Batchmailer\Domain\Repository\MailRepository $mailRepository) {
-		$this->mailRepository = $mailRepository;
-	}
+    /**
+     * injectMailRepository
+     *
+     * @param MailRepository $mailRepository
+     * @return void
+     */
+    public function injectMailRepository(MailRepository $mailRepository)
+    {
+        $this->mailRepository = $mailRepository;
+    }
 
-	/**
-	 * action list
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		$mails = $this->mailRepository->findAll();
-		$this->view->assign('mails', $mails);
-	}
+    /**
+     * action list
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        $mails = $this->mailRepository->findAll();
+        $this->view->assign('mails', $mails);
+    }
 
-	/**
-	 * action show
-	 *
-	 * @param \Cobweb\Batchmailer\Domain\Model\Mail $mail
-	 * @return void
-	 */
-	public function showAction(\Cobweb\Batchmailer\Domain\Model\Mail $mail) {
-		$this->view->assign('mail', $mail);
-	}
+    /**
+     * action show
+     *
+     * @param Mail $mail
+     * @return void
+     */
+    public function showAction(Mail $mail)
+    {
+        $this->view->assign('mail', $mail);
+    }
 
-	/**
-	 * action delete
-	 *
-	 * @param \Cobweb\Batchmailer\Domain\Model\Mail $mail
-	 * @return void
-	 */
-	public function deleteAction(\Cobweb\Batchmailer\Domain\Model\Mail $mail) {
-		$this->mailRepository->remove($mail);
-		$this->flashMessageContainer->add('Your Mail was removed.');
-		$this->redirect('list');
-	}
+    /**
+     * action delete
+     *
+     * @param Mail $mail
+     * @return void
+     */
+    public function deleteAction(Mail $mail)
+    {
+        $this->mailRepository->remove($mail);
+        $this->flashMessageContainer->add('Your Mail was removed.');
+        $this->redirect('list');
+    }
 
-	/**
-	 * action reschedule
-	 *
-	 * @return void
-	 */
-	public function rescheduleAction() {
+    /**
+     * action reschedule
+     *
+     * @return void
+     */
+    public function rescheduleAction()
+    {
 
-	}
+    }
 
 }
