@@ -2,9 +2,6 @@
 if (!defined('TYPO3_MODE')) {
     die ('Access denied.');
 }
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Batch Mailer');
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
         'tx_batchmailer_domain_model_mail',
         'EXT:batchmailer/Resources/Private/Language/locallang_csh_tx_batchmailer_domain_model_mail.xlf'
